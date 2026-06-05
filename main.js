@@ -21,6 +21,8 @@ const points = [
         [61.11324801942486, 10.47215733814966] // Sykehuset helipad
 ];
 
+const goneToPoints = [];
+
 points.forEach(([lat, lon], i) => {
         L.marker([lat, lon])
                 .addTo(map)
@@ -43,9 +45,6 @@ function start() {
 
                         out.innerHTML = `Latitude: ${lat} <br>longitude: ${lon}`
 
-                        const coordArray = [[lat, lon]];
-
-                        if ()
                         },
                         (error) => {
                                 console.log("error", error);
@@ -77,6 +76,26 @@ function getDistanceMeters(lat1, lon1, lat2, lon2) {
                 Math.cos(toRad(lat2)) +
                 Math.sin(dLon / 2) *
                 Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math(1 - a));
+
+        return R * c
+}
+
+function checkNearby(lat, lon) {
+        const threshold = 10; // In meters
+
+        points.forEach(([pLat, pLon], i) => {
+                const dist = getDistanceMeters(lat, lon, pLat, pLon);
+
+                if (dist < threshold) {
+                        goneToPoints.push(i);
+
+                        if (goneToPoints.length === 5) {
+                                alert("You have gone to all points")
+                        }
+                }
+        })
 }
 
 function stop() {
