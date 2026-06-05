@@ -14,7 +14,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 const points = [
-        [61.111540628064624, 10.464557144441276], // Kirken
+        [61.125759284155436, 10.283626575464153], // Kirken61.111540628064624, 10.46455714444127
         [61.11543883867573, 10.463912997677328], // Kunstmuseum
         [61.115074973001875, 10.465480421002013], // Vinmonopolet
         [61.114756707332766, 10.46166297130153], // Stasjonen
@@ -90,6 +90,9 @@ function checkNearby(lat, lon) {
 
                 if (dist < threshold) {
                         goneToPoints.push(i);
+
+                        alert(`Went to point ${i}`)
+                        alert(goneToPoints)
 
                         if (goneToPoints.length === 5) {
                                 alert("You have gone to all points")
