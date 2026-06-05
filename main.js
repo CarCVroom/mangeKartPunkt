@@ -1,6 +1,7 @@
 const map = L.map("map").setView([61.11259539828107, 10.469975869146825], 14);
 let marker;
 let watchId;
+const out = document.getElementById('out');
 
 const myIcon = L.icon({
         iconUrl: "./FAvico.png",
@@ -39,6 +40,8 @@ function start() {
                         }
 
                         map.setView([lat, lon]);
+
+                        out.innerHTML = `Latitude: ${lat} <br>longitude: ${lon}`
                         },
                         (error) => {
                                 console.log("error", error);
