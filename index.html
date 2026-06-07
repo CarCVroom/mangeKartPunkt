@@ -7,12 +7,21 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <link rel="stylesheet" href="css.css">
+        <link rel="icon" type="image/x-icon" href="favicon.gif">
 </head>
 <body>
 
-        <div id="map" style="height: 1000px;"></div>
-
         <p id="out">Getting your location now</p>
+
+        <input placeholder="Søk etter et sted" id="inputSearch"><button id="searchButton" onclick="searchPlace()"">Søk</button><span> !!NB!! Kartet fokuserer ikke på dette punktet, så det kan legges til uten at det merkes.</span>
+        <br>
+        <button onclick="deleteLatestEntry()">Slett siste plass</button><br>
+        <button onclick="deleteLocalstorage()">Slett data i LocalStorage</button>
+
+        <div class="center">
+        <div id="map"></div>
+        </div>
+
 
         <script src="main.js"></script>
 </body>
