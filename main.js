@@ -3,6 +3,7 @@ let marker;
 let watchId;
 const out = document.getElementById('out');
 let newPoints = false;
+const dropdown = document.getElementById("valgOmLS");
 
 const myIcon = L.icon({
         iconUrl: "./FAvico.png",
@@ -15,37 +16,57 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 let points = [
-        [61.111540628064624, 10.46455714444127], // Kirken
-        [61.11543883867573, 10.463912997677328], // Kunstmuseum
-        [61.115074973001875, 10.465480421002013], // Vinmonopolet
-        [61.114756707332766, 10.46166297130153], // Stasjonen
-        [61.11324801942486, 10.47215733814966] // Sykehuset helipad
+        {
+                name: "Kirken",
+                lat: 61.111540628064624,
+                lon: 10.46455714444127
+        },
+        {
+                name: "Kunstmuseum",
+                lat: 61.11543883867573,
+                lon: 10.463912997677328
+        },
+        {
+                name: "Vinmonopolet",
+                lat: 61.115074973001875,
+                lon: 10.465480421002013
+        },
+        {
+                name: "Stasjonen",
+                lat: 61.114756707332766,
+                lon: 10.46166297130153
+        },
+        {
+                name: "Sykehuset helipad",
+                lat: 61.11324801942486,
+                lon: 10.47215733814966
+        }
 ];
 
 let goneToPoints = [];
 const markerLayer = L.layerGroup().addTo(map);
 
 function checkLocalstorage(a) {
-        if (!localStorage.getItem('points')) {
+        if (!localStorage.getItem(a.toString())) {
                 return a;
         } else {
-                a = JSON.parse(localStorage.getItem('points'));
+                a = JSON.parse(localStorage.getItem(a.toString()));
                 return a;
         }
 }
 
-function deleteLocalstorage() {
-        localStorage.removeItem('points');
+function deleteLocalstorage(a) {
+        a = a ?? dropdown.value;
+        localStorage.removeItem(a);
 }
 
 function renderPoints() {
-        console.log(markerLayer.getLayers().length);
         markerLayer.clearLayers();
 
-        points.forEach(([lat, lon], i) => {
-                L.marker([lat, lon])
+        points.forEach((point, i) => {
+                L.marker([point.lat, point.lon])
                         .addTo(markerLayer)
-                        .bindPopup(`Point ${i + 1}`);
+                        .bindPopup(`${point.name}`);
         });
 }
 
@@ -84,6 +105,7 @@ function start() {
 
 start();
 points = checkLocalstorage(points);
+goneToPoints = checkLocalstorage(goneToPoints)
 renderPoints();
 
 function getDistanceMeters(lat1, lon1, lat2, lon2) {
@@ -107,17 +129,18 @@ function getDistanceMeters(lat1, lon1, lat2, lon2) {
 }
 
 function checkNearby(lat, lon) {
-        const threshold = 10; // In meters
+        const threshold = 30; // In meters
 
-        points.forEach(([pLat, pLon], i) => {
-                const dist = getDistanceMeters(lat, lon, pLat, pLon);
+        points.forEach((point, i) => {
+                const dist = getDistanceMeters(lat, lon, point.lat, point.lon);
 
                 if (dist < threshold) {
-                        goneToPoints.push(i);
+                        goneToPoints.push(point);
+                        addToLocalstorage(goneToPoints)
 
                         alert(`Went to point ${i}`)
 
-                        if (goneToPoints.length === 5) {
+                        if (goneToPoints.length === points.length) {
                                 alert("You have gone to all points")
                                 stop();
                         }
@@ -137,12 +160,14 @@ async function searchPlace() {
                 if (newPoints === false) { points.length = 0; }
                 newPoints = true;
 
-                points.push([parseFloat(data[0].lat),
-                             parseFloat(data[0].lon)]);
-                console.log(points)
+                points.push({
+                        name: place,
+                        lat: parseFloat(data[0].lat),
+                        lon: parseFloat(data[0].lon)
+                });
 
                 renderPoints();
-                addToLocalstorage();
+                addToLocalstorage("points");
         }
 }
 
@@ -157,10 +182,12 @@ function deleteLatestEntry() {
         points.pop();
         renderPoints();
         console.log(points)
-        addToLocalstorage();
+        addToLocalstorage("points");
 }
 
-function addToLocalstorage() {
-        let JSONpoints = JSON.stringify(points);
-        localStorage.setItem('points', JSONpoints);
+function addToLocalstorage(a) {
+        document.getElementById('output').innerHTML = goneToPoints.map(item => `<li>${item.name}</li>`).join('');
+
+        let JSONpoints = JSON.stringify(a);
+        localStorage.setItem(a.toString(), JSONpoints);
 }

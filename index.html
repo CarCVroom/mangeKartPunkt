@@ -17,6 +17,12 @@
         <br>
         <button onclick="deleteLatestEntry()">Slett siste plass</button><br>
         <button onclick="deleteLocalstorage()">Slett data i LocalStorage</button>
+        <select id="valgOmLS">
+                <option value="goneToPoints">Punkt som du har gått til</option>
+                <option value="points">Punkt på kartet</option>
+        </select>
+
+        <ol id="output"></ol>
 
         <div class="center">
         <div id="map"></div>
