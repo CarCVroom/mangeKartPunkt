@@ -6,7 +6,7 @@ let newPoints = false;
 const dropdown = document.getElementById("valgOmLS");
 
 const myIcon = L.icon({
-        iconUrl: "./FAvico.png",
+        iconUrl: "./iconMap.jpg",
         iconSize: [32, 32],
         iconAnchor: [16, 32]
 });
@@ -15,33 +15,14 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "© OpenStreetMap contributors"
 }).addTo(map);
 
-let points = [
-        {
-                name: "Kirken",
-                lat: 61.111540628064624,
-                lon: 10.46455714444127
-        },
-        {
-                name: "Kunstmuseum",
-                lat: 61.11543883867573,
-                lon: 10.463912997677328
-        },
-        {
-                name: "Vinmonopolet",
-                lat: 61.115074973001875,
-                lon: 10.465480421002013
-        },
-        {
-                name: "Stasjonen",
-                lat: 61.114756707332766,
-                lon: 10.46166297130153
-        },
-        {
-                name: "Sykehuset helipad",
-                lat: 61.11324801942486,
-                lon: 10.47215733814966
-        }
-];
+let points = [];
+
+async function fetchPoints() {
+        const response = await fetch("./data.json");
+        points = await response.json();
+
+        console.log(points)
+}
 
 let goneToPoints = [];
 const markerLayer = L.layerGroup().addTo(map);
