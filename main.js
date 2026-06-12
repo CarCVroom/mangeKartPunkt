@@ -23,6 +23,8 @@ async function fetchPoints() {
         points = await response.json();
 
         console.log(points)
+
+        renderPoints();
 }
 
 let goneToPoints = [];
@@ -88,7 +90,6 @@ function start() {
 fetchPoints()
 start();
 goneToPoints = checkLocalstorage(goneToPoints)
-renderPoints();
 
 function getDistanceMeters(lat1, lon1, lat2, lon2) {
         const R = 6371000;
