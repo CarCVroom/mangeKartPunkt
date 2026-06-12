@@ -87,7 +87,6 @@ function start() {
 
 fetchPoints()
 start();
-points = checkLocalstorage(points);
 goneToPoints = checkLocalstorage(goneToPoints)
 renderPoints();
 
