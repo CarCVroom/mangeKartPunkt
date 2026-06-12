@@ -16,7 +16,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 let points = [];
-let APIURL = "https://carcvrom.pythonanywhere.com/api/data";
+let APIURL = "https://carcvroom.pythonanywhere.com/api/data";
 
 async function fetchPoints() {
         const response = await fetch(APIURL);
