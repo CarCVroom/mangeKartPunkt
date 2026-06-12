@@ -123,6 +123,10 @@ function checkNearby(lat, lon) {
 
                         alert(`Went to point ${i}`)
 
+                        points.splice(i, 1);
+                        addToLocalstorage(points);
+                        renderPoints();
+
                         if (goneToPoints.length === points.length) {
                                 alert("You have gone to all points")
                                 stop();
