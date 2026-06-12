@@ -16,9 +16,10 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 let points = [];
+let APIURL = "https://carcvrom.pythonanywhere.com/api/data";
 
 async function fetchPoints() {
-        const response = await fetch("./data.json");
+        const response = await fetch(APIURL);
         points = await response.json();
 
         console.log(points)
@@ -84,6 +85,7 @@ function start() {
         }
 }
 
+fetchPoints()
 start();
 points = checkLocalstorage(points);
 goneToPoints = checkLocalstorage(goneToPoints)
