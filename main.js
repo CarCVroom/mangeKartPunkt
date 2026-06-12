@@ -6,7 +6,7 @@ let newPoints = false;
 const dropdown = document.getElementById("valgOmLS");
 
 const myIcon = L.icon({
-        iconUrl: "./iconMap.jpg",
+        iconUrl: "./iconMap.JPG",
         iconSize: [32, 32],
         iconAnchor: [16, 32]
 });
