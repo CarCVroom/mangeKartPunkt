@@ -115,16 +115,19 @@ function checkNearby(lat, lon) {
         const threshold = 30; // In meters
 
         points.forEach((point, i) => {
+                const alreadyVisited = goneToPoints.some(gonePoint => gonePoint.name === point.name);
+                if (alreadyVisited) {
+                        return; // Skip this point entirely and move to the next one
+                }
+
                 const dist = getDistanceMeters(lat, lon, point.lat, point.lon);
 
                 if (dist < threshold) {
                         goneToPoints.push(point);
                         addToLocalstorage(goneToPoints)
 
-                        alert(`Went to point ${i}`)
+                        alert(`Went to point ${point.name}`)
 
-                        points.splice(i, 1);
-                        addToLocalstorage(points);
                         renderPoints();
 
                         if (goneToPoints.length === points.length) {
